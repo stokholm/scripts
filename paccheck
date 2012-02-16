@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# paccheck: Give an overview of important package info
+#
+
+GROUPLIST="base base-devel"
+
+print () {
+  tee >([[ $(wc -l) -eq 0 ]] && echo "(none)") \
+      | while read LINE; do echo "==> ${LINE}"; done
+}
+
+
+echo "Packages added to server groups (should be installed)"
+comm -23 <(pacman -Sqg ${GROUPLIST} | sort -u) \
+         <(pacman -Qq | sort) | print
+
+echo
+
+echo "Packages no longer needed (may be removed)"
+pacman -Qdt | print
+
+echo
+
+echo "Packages installed explicitly (may be removed)"
+  if [[ "${1}" == "-v" ]]; then
+    comm -23 <(pacman -Qqe | sort) \
+             <(pacman -Qqg ${GROUPLIST} | sort)
+  else
+    echo use -v to view
+  fi | print
+
+exit 0

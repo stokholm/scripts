@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# dwmstatus: Output text for use in the status bar of dwm
+#
+
+printf -v BAT %3s%% $(cat /sys/devices/platform/smapi/BAT0/remaining_percent)
+printf -v CPU $(cut -d' ' -f1 /proc/loadavg)
+printf -v VOL %4s $([[ $(amixer get Master | grep -c "\[off\]") -eq 2 ]] && echo mute || amixer get Master | egrep -om1 "[0-9]+%")
+
+echo -n "bat:${BAT}  vol:${VOL}  cpu:${CPU}  "
+date +"%F %R"
+
+exit 0
