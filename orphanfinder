@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# orphanfinder: Find files not in Pacman's database
+#
+
+INCLUDE="/bin /etc /lib /lib64 /opt /sbin /usr"
+EXCLUDE="\/(certs|fonts|grub|mime)\/"
+
+echo "LAST ACCESS           ORPHANED FILE"
+
+comm -23 \
+  <(find ${INCLUDE} 2>/dev/null | sort) \
+  <(pacman -Qlq | sed "s/^\(.*\)\/$/\1/" | sort -u) | \
+  egrep -v ${EXCLUDE} | \
+  while read file; do
+    stat -c %x "${file}" | cut -d. -f1 | tr -d "\n"
+    echo "   ${file}"
+  done | sort
+
+exit 0

@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# mirror: Synchronize two directories both ways
+#
+
+RSYNC_OPTS="--archive --itemize-changes --update"
+
+b () { echo -e "\033[1m${@}\033[0m"; }
+u () { echo -e "\033[4m${@}\033[0m"; }
+
+if [[ ${#} != 2 ]]; then
+  echo -e "Usage: $(b $(basename ${0})) $(u DIR) $(u DIR)" >&2
+  exit 1
+fi
+
+echo ${1} "-->" ${2}
+rsync ${RSYNC_OPTS} "${1}"/* "${2}"
+
+echo ${2} "-->" ${1}
+rsync ${RSYNC_OPTS} "${2}"/* "${1}"
+
+exit 0

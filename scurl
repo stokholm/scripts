@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# scurl: Download given URLs with curl through a proxy server
+#
+
+source ${0%/*}/config
+
+RETRY_DELAY=60
+RESUMABLE_ERRORS="7 18"
+
+OPTIONS="
+  --continue-at -
+  --proxy ${PROXY_SERVER}
+  --remote-time
+  --user-agent ${PROXY_AGENT}
+"
+
+is_resumable () {
+  local ERROR
+  for ERROR in ${RESUMABLE_ERRORS}; do
+    [[ ${1} -eq ${ERROR} ]] && return 0
+  done
+  return 1
+}
+
+pretty_name () {
+  local NAME=$(basename ${1})
+  printf ${NAME//%/\\x}
+}
+
+for URL in ${@}; do
+  NAME=$(pretty_name ${URL})
+  echo -e "\033[1m${NAME}\033[0m"
+  while true; do
+    curl ${OPTIONS} --output "${NAME}" ${URL}; ERROR=${?}
+    is_resumable ${ERROR} || break
+    sleep ${RETRY_DELAY}
+  done; echo
+done
+
+exit 0

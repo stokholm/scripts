@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# publish: Upload files from a user defined folder to an SCP server
+#
+
+source ${0%/*}/config
+
+if [[ ${#} -ne 2 || ! -d "${1}" ]]; then
+  echo Usage: publish PATH EXT >&2
+  exit 1
+fi
+
+echo -n "Initializing... "
+ssh ${SCP_SERVER} mkdir -p "${SCP_DESTDIR}" || exit 1
+echo Done!
+
+echo Uploading files...
+scp "${1%/}"/*.${2} "${SCP_SERVER}:${SCP_DESTDIR}"
+
+exit 0

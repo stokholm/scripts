@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# klog: Create a summary of changes to the Linux kernel
+#
+
+VERSION=${1:-$(uname -r | cut -d- -f1)}
+
+curl -s http://www.kernel.org/pub/linux/kernel/v3.0/ChangeLog-${VERSION} \
+  | awk '/^Date/ { getline; getline; print }'
+
+exit 0

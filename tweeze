@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# tweeze: Find files modified within a specified time range
+#
+
+TMPDST=/tmp
+
+usage () {
+cat >&2 << EOF
+Usage: tweeze PATH TIME TIME
+Find files modified within a specified time range
+Time is of this format: [[CC]YY]MMDDhhmm[.ss]
+EOF
+exit 1
+}
+
+[[ ${#} -ne 3 ]] && usage
+
+FILEA="${TMPDST}/filea"
+FILEB="${TMPDST}/fileb"
+
+touch -t ${2} "${FILEA}" 2>/dev/null || usage
+touch -t ${3} "${FILEB}" 2>/dev/null || usage
+
+if [[ "${FILEA}" -nt "${FILEB}" ]]; then
+  touch -t ${3} "${FILEA}"
+  touch -t ${2} "${FILEB}"
+fi
+
+find "${1}" -xdev -type f -newer "${FILEA}" -not -newer "${FILEB}" 2>/dev/null |\
+  while read FILE; do
+    stat -c %y "${FILE}" | cut -d. -f1 | tr -d "\n"
+    echo "   ${FILE}"
+  done | sort
+
+rm -f "${FILEA}" "${FILEB}"
+
+exit 0

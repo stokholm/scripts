@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# genmlist: Generate a list of the highest ranking Pacman Mirrors
+#
+
+# Use 'all' for all countries
+COUNTRIES="all"
+
+# Defaults to 5 mirrors, uses $1 if given
+CUT_OFF=${1:-5}
+
+LINK="http://www.archlinux.org/mirrorlist/?protocol=http&ip_version=4&use_mirror_status=on&country=${COUNTRIES//[[:space:]]/&country=}"
+wget -qO - "${LINK}" | head -n$((${CUT_OFF}*2+5)) | sed "s/#Server/Server/"
+
+exit 0

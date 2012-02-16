@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# raw2jpg: Convert a batch of Canon Raw image files to jpg
+#
+
+OPTIONS="
+  --size=${2}
+  --out-type=jpg
+  --compression=${3}
+  --overwrite
+"
+
+if [[ ${#} -ne 3 || ! -d "${1}" ]]; then
+  echo Usage: raw2jpg PATH SIZE QUALITY >&2
+  exit 1
+fi
+
+find "${1}" -iregex ".*\.cr2" -print0 | \
+  xargs -0 ufraw-batch ${OPTIONS} 2>&1 | \
+  grep "ufraw-batch: Saved"
+
+exit 0

@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# descs: Generate script descriptions for the README
+#
+
+cd ${HOME}/scripts || exit 1
+
+git ls-tree -r --name-only master | xargs awk 'FILENAME!="README" && FNR==3 { print substr($0, 3) }'
+
+exit 0

@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# camimport: Import photos from a camera to a user defined directory
+#
+
+CAMERA=/dev/sdb1
+MOUNTDIR=/mnt
+MOUNTOPTS=umask=022,uid=$(id -u),gid=$(id -g),shortname=lower
+IREGEX=".*\.\(cr2\|jpg\)"
+
+if [[ ${#} -ne 1 ]]; then
+  echo Usage: camimport PATH >&2
+  exit 1
+fi
+
+mkdir -p "${1}" || exit 1
+
+sudo mount ${CAMERA} -t vfat -o ${MOUNTOPTS} "${MOUNTDIR}" || exit 1
+
+find "${MOUNTDIR}" -iregex "${IREGEX}" | while read PHOTO; do
+  echo -n "Copying ${PHOTO}... "
+  cp -f "${PHOTO}" "${1}" && \
+  chmod a-x "${1%/}"/$(basename "${PHOTO}") && \
+  echo Done!
+done
+
+echo -n "Delete files from ${CAMERA} (rm -rf ${MOUNTDIR}/*)? [y/N] "
+read KEY && [[ ${KEY} == y ]] && rm -rf "${MOUNTDIR}"/*
+
+sudo umount "${MOUNTDIR}"
+
+exit 0

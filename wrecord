@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# wrecord: Record from webcam with sound using FFmpeg
+#
+
+ffmpeg -f video4linux2 -i /dev/video0 -f alsa -i hw:0 -sameq -y ${1:-webcam}.avi
+
+exit 0

@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# parchive: Archive photos from a user defined folder and extension
+#
+
+PHOTODIR=${HOME}/photos
+EXTENSIONS="cr2|jpg"
+
+usage () {
+  echo "Usage: parchive PATH ${EXTENSIONS}" >&2
+  exit 1
+}
+
+[[ ${#} -eq 2 && -d "${1}" ]] || usage
+[[ ${2} == @(${EXTENSIONS}) ]] || usage
+
+if ! which exiv2 &>/dev/null; then
+  echo Error: exiv2 must be installed >&2
+  exit 1
+fi
+
+find "${1}" -iname "*.${2}" -not -regex ".*/.qiv-trash/.*" | while read PHOTO; do
+  DIRNAME="${PHOTODIR}/$(exiv2 "${PHOTO}" | awk '/timestamp/ { print $4 }' | tr ':' '/')"
+  mkdir -p "${DIRNAME}" || exit 1
+  echo -n "Moving ${PHOTO} to ${DIRNAME}... "
+  mv "${PHOTO}" "${DIRNAME}" && echo Done!
+done
+
+exit 0

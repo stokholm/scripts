@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# startdwm: Immediately start dwm again if it's killed
+#
+
+while true; do
+  dwm
+done

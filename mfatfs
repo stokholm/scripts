@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# mfatfs: Mount a FAT file system to $MOUNTDIR
+#
+
+DEFAULT=/dev/sdb1
+MOUNTDIR=/mnt
+
+# Try to mount disk as a FAT file system
+sudo mount ${1:-${DEFAULT}} \
+           -t vfat \
+           -o uid=$(id -u),gid=$(id -g),shortname=mixed \
+           "${MOUNTDIR}" 2>/dev/null
+
+# Check if the mount attempt was successful
+if [[ ${?} == 0 ]]; then
+  ranger "${MOUNTDIR}" ${HOME}
+  sudo umount "${MOUNTDIR}"
+else
+  echo Mount of ${1:-${DEFAULT}} to ${MOUNTDIR} failed!
+  exit 1
+fi
+
+exit 0

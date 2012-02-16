@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# srecord: Record from screen with sound using FFmpeg
+#
+
+ffmpeg -s 1280x800 -r 25 -f x11grab -i :0.0 -f alsa -i hw:0 -sameq -y ${1:-screen}.avi
+
+exit 0

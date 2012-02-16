@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# flac2mp3: Convert all *.flac -> *.mp3 in input directories
+#
+
+BASEDIR=${PWD}
+SEPARATOR="======================================================================"
+
+for MUSICDIR in "${@}"
+do
+  cd "${MUSICDIR}" && echo ${SEPARATOR} \
+                   && echo Working in \"${MUSICDIR}\" \
+                   && echo ${SEPARATOR} && \
+  for FILENAME in *.flac
+  do
+    BASENAME=$(basename "${FILENAME}" .flac)
+    echo -n "Converting \"${FILENAME}\"... "
+    flac --decode --silent "${FILENAME}" && \
+    lame --preset standard --quiet "${BASENAME}.wav" "${BASENAME}.mp3" && \
+    rm "${BASENAME}.wav" && \
+    echo done!
+  done
+  cd "${BASEDIR}"
+done
+
+exit 0

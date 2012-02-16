@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# todo: Manage a todo list with the help of dmenu
+#
+
+TODOFILE=${HOME}/sandbox/todo
+DMENUOPTS="-fn -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*"
+MAXLINES=10
+
+touch "${TODOFILE}"
+[[ -f "${TODOFILE}" ]] || exit 1
+
+LINECOUNT=$(wc -l "${TODOFILE}" | cut -f1 -d' ')
+[[ ${LINECOUNT} -gt ${MAXLINES} ]] && LINECOUNT=${MAXLINES}
+
+INPUT="$(cat "${TODOFILE}" | dmenu -l ${LINECOUNT} ${DMENUOPTS})"
+
+[[ "${INPUT}" ]] || exit 0
+
+if grep -Fx "${INPUT}" "${TODOFILE}" >/dev/null; then
+  INPUT=$(echo "${INPUT}" | sed 's/\(\*\|\.\|\/\|\[\|\\\|\]\)/\\&/g')
+  sed -i "/^${INPUT}$/d" "${TODOFILE}"
+else
+  echo "${INPUT}" >>"${TODOFILE}"
+fi
+
+exit 0

@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# sexec: Execute command in a screen session
+#
+
+[[ ${STY} ]] && echo \
+  Please quit or detach from current session first >&2 && exit 1
+
+COMMAND=$(basename ${0})
+XTERM="urxvt -T ${COMMAND} -e"
+SCREEN=screen
+
+[[ ${DISPLAY} && ${TERM} == linux ]] && SCREEN="${XTERM} ${SCREEN}"
+
+${SCREEN} -a -d -R ${COMMAND} /usr/bin/${COMMAND} "${@}"; clear; exit 0

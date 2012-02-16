@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# volset: Set volume and update the status bar of dwm
+#
+
+amixer -q set Master ${@}
+xsetroot -name "$(dwmstatus)"
+
+exit 0

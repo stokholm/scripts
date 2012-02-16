@@ -1,0 +1,25 @@
+backup: Backup files in $HOME to /mnt
+camimport: Import photos from a camera to a user defined directory
+descs: Generate script descriptions for the README
+dupes: Find duplicate files according to md5sum
+dwmstatus: Output text for use in the status bar of dwm
+flac2mp3: Convert all *.flac -> *.mp3 in input directories
+genmlist: Generate a list of the highest ranking Pacman Mirrors
+klog: Create a summary of changes to the Linux kernel
+mfatfs: Mount a FAT file system to $MOUNTDIR
+mirror: Synchronize two directories both ways
+orphanfinder: Find files not in Pacman's database
+paccheck: Give an overview of important package info
+parchive: Archive photos from a user defined folder and extension
+publish: Upload files from a user defined folder to an SCP server
+qiv-command: Command file for use with the Quick Image Viewer
+raw2jpg: Convert a batch of Canon Raw image files to jpg
+scurl: Download given URLs with curl through a proxy server
+sieve: Search for files by string(s) in name
+srecord: Record from screen with sound using FFmpeg
+startdwm: Immediately start dwm again if it's killed
+todo: Manage a todo list with the help of dmenu
+tweeze: Find files modified within a specified time range
+sexec: Execute command in a screen session
+volset: Set volume and update the status bar of dwm
+wrecord: Record from webcam with sound using FFmpeg
