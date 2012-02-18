@@ -12,7 +12,7 @@ orphanfinder: Find files not in Pacman's database
 paccheck: Give an overview of important package info
 parchive: Archive photos from a user defined folder and extension
 publish: Upload files from a user defined folder to an SCP server
-purge: Purge unwanted files from $HOME with confirmation
+purge: Purge unwanted files with confirmation
 qiv-command: Command file for use with the Quick Image Viewer
 raw2jpg: Convert a batch of Canon Raw image files to jpg
 scurl: Download given URLs with curl through a proxy server

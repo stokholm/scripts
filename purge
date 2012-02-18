@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# purge: Purge unwanted files from $HOME with confirmation
+# purge: Purge unwanted files with confirmation
 #
 
 FILES="
