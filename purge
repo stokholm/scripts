@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# purge: Purge unwanted files from $HOME with confirmation
+#
+
+FILES="
+/home/lars/.adobe
+/home/lars/.bash_history
+/home/lars/.cache
+/home/lars/.config/libreoffice
+/home/lars/.config/ranger
+/home/lars/.dbus
+/home/lars/.dmenu_cache
+/home/lars/.fontconfig
+/home/lars/.gimp-2.6
+/home/lars/.lesshst
+/home/lars/.local
+/home/lars/.macromedia
+/home/lars/.mplayer
+/home/lars/.ncmpcpp/error
+/home/lars/.pki
+/home/lars/.recently-used
+/home/lars/.thumbnails
+"
+
+u () { echo -e "\033[4m${@}\033[0m"; }
+
+IFS=$'\n'; for FILE in ${FILES}; do
+  [[ -a "${FILE}" ]] || continue
+  read -p "Remove $(u ${FILE}) [y/N]? "
+  [[ ${REPLY} == y ]] && rm -rf "${FILE}"
+done
+
+exit 0
