@@ -5,7 +5,7 @@
 
 sudo cryptsetup luksOpen /dev/sdb1 backup && \
 sudo mount /dev/mapper/backup /mnt && \
-rsync --archive --delete --exclude=.cookies/ --verbose ${HOME} /mnt && \
+rsync --archive --delete --verbose ${HOME} /mnt && \
 sudo umount /mnt && \
 sudo cryptsetup luksClose backup && \
 echo Operation succeeded! && exit 0
