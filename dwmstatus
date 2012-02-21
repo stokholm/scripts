@@ -5,9 +5,11 @@
 
 printf -v BAT %3s%% $(cat /sys/devices/platform/smapi/BAT0/remaining_percent)
 printf -v CPU $(cut -d' ' -f1 /proc/loadavg)
+printf -v LCD $(cat /sys/class/backlight/acpi_video0/brightness)
+printf -v POW %5s $(awk '{ if ($1==0) printf "a/c"; else printf "%.1fW", $1/-1000 }' /sys/devices/platform/smapi/BAT0/power_now)
 printf -v VOL %4s $([[ $(amixer get Master | grep -c "\[off\]") -eq 2 ]] && echo mute || amixer get Master | egrep -om1 "[0-9]+%")
 
-echo -n "bat:${BAT}  vol:${VOL}  cpu:${CPU}  "
+echo -n "bat:${BAT}  cpu:${CPU}  lcd:${LCD}  pow:${POW}  vol:${VOL}  "
 date +"%F %R"
 
 exit 0
