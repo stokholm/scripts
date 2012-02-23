@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# hdmi: Enable HDMI and disable LVDS for X11 output
+#
+
+xrandr --output HDMI2 --auto --output LVDS1 --off
+xautolock -disable; xset -dpms; killall dwm
+
+exit 0
