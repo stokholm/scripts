@@ -3,7 +3,7 @@
 # scurl: Download given URLs with curl through a proxy server
 #
 
-source ${0%/*}/config || exit 1
+source ${0%/*}/utils/config || exit 1
 
 RETRY_DELAY=60
 RESUMABLE_ERRORS="7 18"
