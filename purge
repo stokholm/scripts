@@ -19,6 +19,8 @@ FILES="
 /home/lars/.mplayer
 /home/lars/.ncmpcpp/error
 /home/lars/.pki
+/home/lars/.pulse
+/home/lars/.pulse-cookie
 /home/lars/.recently-used
 /home/lars/.thumbnails
 "
