@@ -5,9 +5,9 @@ dupes: Find duplicate files according to md5sum
 dwmstatus: Output text for use in the status bar of dwm
 flac2mp3: Convert all *.flac -> *.mp3 in input directories
 genmlist: Generate a list of the highest ranking Pacman Mirrors
-hdmi: Enable HDMI and disable LVDS for X11 output
+hdmi: Enable HDMI for X11 output
 klog: Create a summary of changes to the Linux kernel
-lvds: Enable LVDS and disable HDMI for X11 output
+lvds: Disable HDMI for X11 output
 mfatfs: Mount a FAT file system to $MOUNTDIR
 mirror: Synchronize two directories both ways
 orphanfinder: Find files not in Pacman's database

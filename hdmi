@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# hdmi: Enable HDMI and disable LVDS for X11 output
+# hdmi: Enable HDMI for X11 output
 #
 
 xrandr --output HDMI2 --mode 1360x768
