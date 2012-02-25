@@ -3,30 +3,11 @@
 # purge: Purge unwanted files with confirmation
 #
 
-FILES="
-/home/lars/.adobe
-/home/lars/.bash_history
-/home/lars/.cache
-/home/lars/.config/libreoffice
-/home/lars/.config/ranger
-/home/lars/.dbus
-/home/lars/.dmenu_cache
-/home/lars/.fontconfig
-/home/lars/.gimp-2.6
-/home/lars/.lesshst
-/home/lars/.local
-/home/lars/.macromedia
-/home/lars/.ncmpcpp/error
-/home/lars/.pki
-/home/lars/.pulse
-/home/lars/.pulse-cookie
-/home/lars/.recently-used
-/home/lars/.thumbnails
-"
+source ${0%/*}/utils/config || exit 1
 
 u () { echo -e "\033[4m${@}\033[0m"; }
 
-IFS=$'\n'; for FILE in ${FILES}; do
+IFS=$'\n'; for FILE in ${PURGE_FILES}; do
   [[ -a "${FILE}" ]] || continue
   read -p "Remove $(u ${FILE}) [y/N]? "
   [[ ${REPLY} == y ]] && rm -rf "${FILE}"
