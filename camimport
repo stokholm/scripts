@@ -3,7 +3,7 @@
 # camimport: Import photos from a camera to a user defined directory
 #
 
-CAMERA=/dev/sdb1
+CAMERA=/dev/mmcblk0p1
 MOUNTDIR=/mnt
 MOUNTOPTS=umask=022,uid=$(id -u),gid=$(id -g),shortname=lower
 IREGEX=".*\.\(cr2\|jpg\)"
