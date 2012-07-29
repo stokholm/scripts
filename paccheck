@@ -11,23 +11,28 @@ print () {
 }
 
 
-echo "Packages added to server groups (should be installed)"
+echo "Packages not installed from server groups"
 comm -23 <(pacman -Sqg ${GROUPLIST} | sort -u) \
          <(pacman -Qq | sort) | print
 
 echo
 
-echo "Packages no longer needed (may be removed)"
+echo "Packages not required by other packages"
 pacman -Qdt | print
 
 echo
 
-echo "Packages installed explicitly (may be removed)"
+echo "Packages explicitly installed"
   if [[ "${1}" == "-v" ]]; then
     comm -23 <(pacman -Qqe | sort) \
              <(pacman -Qqg ${GROUPLIST} | sort)
   else
     echo use -v to view
   fi | print
+
+echo
+
+echo "Modified config files"
+pacman -Qii | awk '/^MODIFIED/ { print $2 }' | sort | print
 
 exit 0
