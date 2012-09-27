@@ -4,7 +4,7 @@
 #
 
 INCLUDE="/bin /etc /lib /lib64 /opt /sbin /usr"
-EXCLUDE="\/(certs|fonts|grub|mime)\/"
+EXCLUDE="/(certs|fonts|mime|pacman.d/gnupg|systemd/system)/"
 
 echo "LAST ACCESS           ORPHANED FILE"
 
